@@ -1,9 +1,9 @@
 # Упражнение
 
-Инцидент: [MitD](https://encyclopedia.kaspersky.com/glossary/man-in-the-disk-mitd)
-
 __Описание__:
-Файл-обновление программы успели подменить на _Storage_ в период между его проверкой модулем проверки _Verifier_ и его уставнокой _Updater_-ом.
+Инцидент типа [MitD](https://encyclopedia.kaspersky.com/glossary/man-in-the-disk-mitd).
+
+Существует угроза безопасности, выраженная в подмене файла-обновления программы на _Storage_ в период между его проверкой со стороны _Verifier_ и его уставнокой _Updater_-ом.
 
 ## Идея
 
