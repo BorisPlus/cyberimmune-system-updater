@@ -50,6 +50,7 @@ def handle_event(id, details_str):
         elif details['operation'] == 'blob_content':
             # got the blob from storage, verify and notify manager
             verified = verify_payload(details)
+            details['verified_digest'] = details['digest']
             cleanup_extra_fields(details)
             details['operation'] = 'handle_verification_result'
             details['verified'] = verified

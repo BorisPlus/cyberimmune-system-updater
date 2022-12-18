@@ -7,12 +7,23 @@ import json
 from producer import proceed_to_deliver
 import base64
 import subprocess
+from hashlib import sha256
 
 UPDATE_CWD = "updater/"
 STORAGE_PATH = "tmp/"
 UPDATE_SCRIPT_NAME = "./update-and-restart-app.sh"
 APP_PATH = "../app/"
 
+def validate_verifier_digest(blob_data, verifier_digest) -> bool:
+    try:
+        payload_digest = sha256()
+        update_payload = base64.b64decode(blob_data)
+        payload_digest.update(update_payload)
+        if verifier_digest == payload_digest.hexdigest():
+            return True
+    except:
+        ...
+    return False
 
 def execute_update(id, details):
     # print(f"[debug]===== EXECUTING UPDATE ====\nDetails: {details}")    
@@ -21,6 +32,10 @@ def execute_update(id, details):
     if details['update_file_encoding'] != 'base64':
         print('[error] unsupported blob encoding')
         return
+    if not validate_verifier_digest(details['blob'], details['verified_digest']):
+        print('[error] verifier digest is not valid')
+        return
+
     update_payload = base64.b64decode(update_payload_b64)
     try:
         with open(UPDATE_CWD+STORAGE_PATH+id, "wb") as f:
