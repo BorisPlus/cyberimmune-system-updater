@@ -14,11 +14,18 @@ STORAGE_PATH = "tmp/"
 UPDATE_SCRIPT_NAME = "./update-and-restart-app.sh"
 APP_PATH = "../app/"
 
+SECRET_SALT = b'S0M3$3CR3TS#1T'
+
+
 def validate_verifier_digest(blob_data, verifier_digest) -> bool:
+    if not blob_data:
+        return False
+    if not verifier_digest:
+        return False
     try:
         payload_digest = sha256()
         update_payload = base64.b64decode(blob_data)
-        payload_digest.update(update_payload)
+        payload_digest.update(update_payload + SECRET_SALT)
         if verifier_digest == payload_digest.hexdigest():
             return True
     except:

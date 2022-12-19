@@ -3,7 +3,7 @@
 from flask import Flask           # import flask
 app = Flask(__name__)             # create an app instance
 
-APP_VERSION = "1.0.4"
+APP_VERSION = "1.0.7"
 
 @app.route("/")                   # at the end point /
 def hello():                      # call method hello

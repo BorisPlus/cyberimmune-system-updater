@@ -25,6 +25,17 @@ def verify_payload(details) -> bool:
     return True
 
 
+SECRET_SALT = b'S0M3$3CR3TS#1T'
+
+def set_up_data_digest(blob_data) -> str:
+    if not blob_data:
+        return None
+    payload_digest = sha256()
+    update_payload = base64.b64decode(blob_data)
+    payload_digest.update(update_payload + SECRET_SALT)
+    return payload_digest.hexdigest()
+
+
 def cleanup_extra_fields(details):
     # remove the blob content from the message payload before sending
     del details['blob']
@@ -50,7 +61,7 @@ def handle_event(id, details_str):
         elif details['operation'] == 'blob_content':
             # got the blob from storage, verify and notify manager
             verified = verify_payload(details)
-            details['verified_digest'] = details['digest']
+            details['verified_digest'] = set_up_data_digest(details['blob'])
             cleanup_extra_fields(details)
             details['operation'] = 'handle_verification_result'
             details['verified'] = verified

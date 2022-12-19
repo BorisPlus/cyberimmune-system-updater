@@ -12,7 +12,7 @@ auth: very-secure-token
 {
     "url":"http://file_server:5001/download-update/app-update.zip", 
     "target": "app", 
-    "digest": "0c973a3ac6118770113ae356d5b1fd779af18f3b6a09077bd2602ea045b23f65", 
+    "digest": "e774a61bf55c0b34a196a93583a27bb84814a0473c99d1183c0c9bff5cffaa44", 
     "digest_alg": "sha256"
 }
 
